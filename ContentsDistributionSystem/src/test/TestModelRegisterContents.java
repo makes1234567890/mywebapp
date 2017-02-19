@@ -17,7 +17,8 @@ public class TestModelRegisterContents {
 
 	@Test
 	public void testRegisterContents() {
-		Map<String, String> map = ModelRegisterContents.registorContents();
+		ModelRegisterContents mrc = new ModelRegisterContents();
+		Map<String, String> map = mrc.getMapRegistored();
 		System.out.println("key\n::value");
 		for(String key: map.keySet()) {
 			System.out.println(	key +"\n::"+ map.get(key));
@@ -27,70 +28,70 @@ public class TestModelRegisterContents {
 	@Test
 	public void testSearchOnFilename001() {
 		final String keyword = null;
-		Map<String, String> mapContents = ModelRegisterContents.registorContents();
-		Map<String, String> mapSearched = ModelRegisterContents.searchOnFilename(keyword, mapContents);
+		ModelRegisterContents mrc = new ModelRegisterContents();
+		Map<String, String> mapSearched = mrc.searchOnFilename(keyword);
 		System.out.println("key\n::value");
 		for(String key: mapSearched.keySet()) {
 			System.out.println(	key +"\n::"+ mapSearched.get(key));
 		}
 		assertEquals(
-				mapContents,
+				mrc.getMapRegistored(),
 				mapSearched
 				);
 	}
 	@Test
 	public void testSearchOnFilename002() {
 		final String keyword = "";
-		Map<String, String> mapContents = ModelRegisterContents.registorContents();
-		Map<String, String> mapSearched = ModelRegisterContents.searchOnFilename(keyword, mapContents);
+		ModelRegisterContents mrc = new ModelRegisterContents();
+		Map<String, String> mapSearched = mrc.searchOnFilename(keyword);
 		System.out.println("key\n::value");
 		for(String key: mapSearched.keySet()) {
 			System.out.println(	key +"\n::"+ mapSearched.get(key));
 		}
 		assertEquals(
-				mapContents,
+				mrc.getMapRegistored(),
 				mapSearched
 				);
 		}
 	@Test
 	public void testSearchOnFilename003() {
 		final String keyword = "a";
-		Map<String, String> mapContents = ModelRegisterContents.registorContents();
-		Map<String, String> mapSearched = ModelRegisterContents.searchOnFilename(keyword, mapContents);
+		ModelRegisterContents mrc = new ModelRegisterContents();
+		Map<String, String> mapSearched = mrc.searchOnFilename(keyword);
 		System.out.println("key\n::value");
 		for(String key: mapSearched.keySet()) {
 			System.out.println(	key +"\n::"+ mapSearched.get(key));
 		}
 		assertNotEquals(
-				mapContents,
+				mrc.getMapRegistored(),
 				mapSearched
 				);
 	}
 	@Test
 	public void testSearchOnFilename004() {
 		final String keyword = "笑";
-		Map<String, String> mapContents = ModelRegisterContents.registorContents();
-		Map<String, String> mapSearched = ModelRegisterContents.searchOnFilename(keyword, mapContents);
+		ModelRegisterContents mrc = new ModelRegisterContents();
+		Map<String, String> mapSearched = mrc.searchOnFilename(keyword);
 		System.out.println("key\n::value");
 		for(String key: mapSearched.keySet()) {
 			System.out.println(	key +"\n::"+ mapSearched.get(key));
 		}
 		assertNotEquals(
-				mapContents,
+				mrc.getMapRegistored(),
 				mapSearched
 				);
 	}
 	@Test
 	public void testSearchOnFilename005() {
 		final String keyword = "asdfghjk";
-		Map<String, String> mapContents = ModelRegisterContents.registorContents();
-		Map<String, String> mapSearched = ModelRegisterContents.searchOnFilename(keyword, mapContents);
+		ModelRegisterContents mrc = new ModelRegisterContents();
+		Map<String, String> mapSearched = mrc.searchOnFilename(keyword);
 		System.out.println("key\n::value");
 		for(String key: mapSearched.keySet()) {
 			System.out.println(	key +"\n::"+ mapSearched.get(key));
 		}
 		assertNotEquals(
-				mapContents,
+				mrc.getMapRegistored(),
 				mapSearched
 				);
 	}

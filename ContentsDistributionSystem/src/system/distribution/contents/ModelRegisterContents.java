@@ -10,24 +10,32 @@ import java.util.Set;
  *
  */
 public class ModelRegisterContents {
-    final static String LOCATION_CONTENTS_ROOT =	// コンテンツディレクトリの物理パス
-    		  "C:\\pleiades\\workspace\\ContentsDistributionSystem"	// プロジェクトの物理パス
-    		+ "\\WebContent\\recochoku";
-	static String CONTEXTPATH_CONTENTS_ROOT =	// コンテンツディレクトリのDLリンク
+	// 保有データ
+	private Map<String, String> mapRegistored = new HashMap<String, String>();
+	public Map<String, String> getMapRegistored() {
+		return mapRegistored;
+	}
+
+	// 定数
+    private final static String LOCATION_CONTENTS_ROOT =	// コンテンツディレクトリの物理パス
+    		  "C:\\Users\\matak\\Music\\recochoku";
+	private final static String CONTEXTPATH_CONTENTS_ROOT =	// コンテンツディレクトリのDLリンク
 			"/ContentsDistributionSystem/recochoku";
-	final static String SEPARATOR_LOCATION = "\\";
-	final static String SEPARATOR_CONTEXTPATH = "/";
-	final static String STR_EMPTY = "";
+	private final static String SEPARATOR_LOCATION = "\\";
+	private final static String SEPARATOR_CONTEXTPATH = "/";
+	private final static String STR_EMPTY = "";
+	// 変数
+	String locationCurrentDirectory = "";	// 検索中のディレクトリ物理パス
+	String contextPathCurrentDirectory = "";	// 検索中のディレクトリDLリンク
 
-	static String locationCurrentDirectory = "";	// 検索中のディレクトリ物理パス
-	static String contextPathCurrentDirectory = "";	// 検索中のディレクトリDLリンク
-
+	// コンストラクタ
+	public ModelRegisterContents() {
+		registorContents();
+	}
 	/**
-	 * コンテンツディレクトリにあるファイル名とダウンロードリンクのMapを返す
-	 * ファイルがない場合はnullを返す
-	 * @return Map<ファイル名,DLリンク>
+	 * コンテンツディレクトリにあるファイルをインスタンスに持つ
 	 */
-	public static Map<String,String> registorContents() {
+	public void registorContents() {
 		Map<String,String> map = new HashMap<String, String>();
 		File currentDirectory =	// カレントディレクトリ
 				new File(
@@ -58,7 +66,7 @@ public class ModelRegisterContents {
 						+ SEPARATOR_CONTEXTPATH
 						+ files[i].getName();
 				// カレントディレクトリを移動して再度検索する
-				map.putAll(registorContents());
+				registorContents();
 				// ディレクトリの検索が終わったのでカレントディレクトリを元に戻す
 				locationCurrentDirectory =
 						locationCurrentDirectory.replace(
@@ -72,25 +80,36 @@ public class ModelRegisterContents {
 								STR_EMPTY);
 			}
 		}
-		return map;
 	}
 
-	public static Map<String,String> searchOnFilename(
+	/**
+	 * 登録済みコンテンツマップからファイル名（キー）で検索する
+	 * @param keyword 検索キーワード
+	 */
+	public Map<String,String> searchOnFilename( String keyword ) {
+		return searchOnKey(keyword, mapRegistored);
+	}
+
+	/**
+	 * マップ<String, String>のキーを部分一致検索する
+	 * @param keyword	検索キーワード
+	 * @param map	検索対象マップ
+	 * @return	検索結果のマップ、キーワードが空・nullの場合検索対象マップを返す
+	 */
+	public static Map<String, String> searchOnKey(
 			String keyword,
-			Map<String, String> mapContents) {
+			Map<String, String> map) {
 		Map<String,String> mapSearchResult = new HashMap<String, String>();
 		if(		keyword == null
 			||	"".equals(keyword)
 		) {
-			// キーワードがない場合 リセットする
-			mapSearchResult = mapContents;
-			registorContents();
+			// キーワードがない場合 そのまま返す
+			return map;
 		} else {
-			mapSearchResult.clear();
-			Set<String> setFilename = mapContents.keySet();
-			for(String filename: setFilename) {
-				if( filename.contains(keyword) ) {
-					mapSearchResult.put(filename, mapContents.get(filename));
+			Set<String> setKey = map.keySet();
+			for(String key: setKey) {
+				if( key.contains(keyword) ) {
+					mapSearchResult.put(key, map.get(key));
 				}
 			}
 		}
