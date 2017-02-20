@@ -19,7 +19,7 @@
 </form>
 <hr />
 <%
-Map<String,String> mapContentsLink = (Map<String,String>) request.getAttribute("namesFile");
+Map<String,String> mapContentsLink = (Map<String,String>) request.getAttribute("mapFilenameDLPath");
 if(mapContentsLink == null) {
 	out.println("-");
 } else {

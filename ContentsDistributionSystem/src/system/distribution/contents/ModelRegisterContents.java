@@ -18,9 +18,9 @@ public class ModelRegisterContents {
 
 	// 定数
     private final static String LOCATION_CONTENTS_ROOT =	// コンテンツディレクトリの物理パス
-    		  "C:\\Users\\matak\\Music\\recochoku";
+    		  "C:\\pleiades\\gitrepository\\ContentsDistributionSystem\\WebContent\\contents";
 	private final static String CONTEXTPATH_CONTENTS_ROOT =	// コンテンツディレクトリのDLリンク
-			"/ContentsDistributionSystem/recochoku";
+			"/ContentsDistributionSystem/contents";
 	private final static String SEPARATOR_LOCATION = "\\";
 	private final static String SEPARATOR_CONTEXTPATH = "/";
 	private final static String STR_EMPTY = "";
@@ -30,13 +30,13 @@ public class ModelRegisterContents {
 
 	// コンストラクタ
 	public ModelRegisterContents() {
-		registorContents();
+		this.mapRegistored.clear();
+		this.registorContents();
 	}
 	/**
 	 * コンテンツディレクトリにあるファイルをインスタンスに持つ
 	 */
 	public void registorContents() {
-		Map<String,String> map = new HashMap<String, String>();
 		File currentDirectory =	// カレントディレクトリ
 				new File(
 						  LOCATION_CONTENTS_ROOT
@@ -48,7 +48,7 @@ public class ModelRegisterContents {
 		for( int i=0; i<files.length; i++) {
 			if( files[i].isFile() ) {
 				// ファイルの時 ファイル名とDLリンクを登録
-				map.put(
+				mapRegistored.put(
 						files[i].getName(),
 						  CONTEXTPATH_CONTENTS_ROOT
 						+ contextPathCurrentDirectory
@@ -72,28 +72,30 @@ public class ModelRegisterContents {
 						locationCurrentDirectory.replace(
 								  SEPARATOR_LOCATION
 								+ files[i].getName(),
-								STR_EMPTY);
+								STR_EMPTY
+								);
 				contextPathCurrentDirectory =
 						contextPathCurrentDirectory.replace(
 								SEPARATOR_CONTEXTPATH
 								+ files[i].getName(),
-								STR_EMPTY);
+								STR_EMPTY
+								);
 			}
 		}
 	}
 
 	/**
-	 * 登録済みコンテンツマップからファイル名（キー）で検索する
-	 * @param keyword 検索キーワード
+	 * 登録済みコンテンツマップからファイル名（キー）で部分一致検索する
+	 * @param filename 検索キーワード（ファイル名）
 	 */
-	public Map<String,String> searchOnFilename( String keyword ) {
-		return searchOnKey(keyword, mapRegistored);
+	public Map<String,String> searchOnFilename( String filename ) {
+		return searchOnKey(filename, mapRegistored);
 	}
 
 	/**
 	 * マップ<String, String>のキーを部分一致検索する
 	 * @param keyword	検索キーワード
-	 * @param map	検索対象マップ
+	 * @param map	検索対象マップ<String,String>
 	 * @return	検索結果のマップ、キーワードが空・nullの場合検索対象マップを返す
 	 */
 	public static Map<String, String> searchOnKey(
@@ -101,10 +103,10 @@ public class ModelRegisterContents {
 			Map<String, String> map) {
 		Map<String,String> mapSearchResult = new HashMap<String, String>();
 		if(		keyword == null
-			||	"".equals(keyword)
+			||	keyword.isEmpty()
 		) {
 			// キーワードがない場合 そのまま返す
-			return map;
+			mapSearchResult = map;
 		} else {
 			Set<String> setKey = map.keySet();
 			for(String key: setKey) {

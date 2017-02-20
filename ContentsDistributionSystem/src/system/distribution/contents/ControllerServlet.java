@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/ControllerServlet")
 public class ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ModelRegisterContents mrc = new ModelRegisterContents();
+	private ModelRegisterContents mrc = null;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -32,11 +32,11 @@ public class ControllerServlet extends HttpServlet {
 			HttpServletRequest request,
 			HttpServletResponse response
 			) throws ServletException, IOException {
-		String keywordFile = (String) request.getParameter("keyword");
-		System.out.println(keywordFile);	// TODO ログ
+		String keywordFilename = (String) request.getParameter("keyword");
+		System.out.println("検索キーワード:"+ keywordFilename);	// TODO ログ
 		Map<String, String> mapContents =
-				mrc.searchOnFilename(keywordFile);
-		request.setAttribute("namesFile", mapContents);
+				mrc.searchOnFilename(keywordFilename);
+		request.setAttribute("mapFilenameDLPath", mapContents);
 		RequestDispatcher dispathcer =
 				request.getRequestDispatcher("/index.jsp");
 		dispathcer.forward(request, response);
@@ -51,5 +51,4 @@ public class ControllerServlet extends HttpServlet {
 			) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }
