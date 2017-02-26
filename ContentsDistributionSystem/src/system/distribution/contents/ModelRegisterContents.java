@@ -5,11 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 /**
- *
+ * コンテンツデータ保有クラス
  * @author matak
  *
  */
 public class ModelRegisterContents {
+
 	// 保有データ
 	private Map<String, String> mapRegistored = new HashMap<String, String>();
 	public Map<String, String> getMapRegistored() {
@@ -21,8 +22,7 @@ public class ModelRegisterContents {
     		  "C:\\pleiades\\gitrepository\\ContentsDistributionSystem\\WebContent\\contents";
 	private final static String CONTEXTPATH_CONTENTS_ROOT =	// コンテンツディレクトリのDLリンク
 			"/ContentsDistributionSystem/contents";
-	private final static String SEPARATOR_LOCATION = "\\";
-	private final static String SEPARATOR_CONTEXTPATH = "/";
+	private final static String DELIMITER_CONTEXTPATH = "/";
 	private final static String STR_EMPTY = "";
 	// 変数
 	String locationCurrentDirectory = "";	// 検索中のディレクトリ物理パス
@@ -34,7 +34,7 @@ public class ModelRegisterContents {
 		this.registorContents();
 	}
 	/**
-	 * コンテンツディレクトリにあるファイルをインスタンスに持つ
+	 * コンテンツディレクトリにあるファイルをインスタンスに格納する
 	 */
 	public void registorContents() {
 		File currentDirectory =	// カレントディレクトリ
@@ -42,7 +42,7 @@ public class ModelRegisterContents {
 						  LOCATION_CONTENTS_ROOT
 						+ locationCurrentDirectory
 						);
-		System.out.println(currentDirectory);
+		SystemLog.println(currentDirectory.getPath(), this);
 		File files[] = currentDirectory.listFiles();	// カレントディレクトリにあるファイル
 
 		for( int i=0; i<files.length; i++) {
@@ -52,31 +52,31 @@ public class ModelRegisterContents {
 						files[i].getName(),
 						  CONTEXTPATH_CONTENTS_ROOT
 						+ contextPathCurrentDirectory
-						+ SEPARATOR_CONTEXTPATH
+						+ DELIMITER_CONTEXTPATH
 						+ files[i].getName()
 						);
 			} else  if( files[i].isDirectory() ) {
 				// ディレクトリの時 その階層へ移動
 				locationCurrentDirectory =
 						  locationCurrentDirectory
-						+ SEPARATOR_LOCATION
+						+ File.separator
 						+ files[i].getName();
 				contextPathCurrentDirectory =
 						  contextPathCurrentDirectory
-						+ SEPARATOR_CONTEXTPATH
+						+ DELIMITER_CONTEXTPATH
 						+ files[i].getName();
 				// カレントディレクトリを移動して再度検索する
 				registorContents();
 				// ディレクトリの検索が終わったのでカレントディレクトリを元に戻す
 				locationCurrentDirectory =
 						locationCurrentDirectory.replace(
-								  SEPARATOR_LOCATION
+								  File.separator
 								+ files[i].getName(),
 								STR_EMPTY
 								);
 				contextPathCurrentDirectory =
 						contextPathCurrentDirectory.replace(
-								SEPARATOR_CONTEXTPATH
+								DELIMITER_CONTEXTPATH
 								+ files[i].getName(),
 								STR_EMPTY
 								);
@@ -89,14 +89,19 @@ public class ModelRegisterContents {
 	 * @param filename 検索キーワード（ファイル名）
 	 */
 	public Map<String,String> searchOnFilename( String filename ) {
-		return searchOnKey(filename, mapRegistored);
+		Map<String,String> mapSearchResult = new HashMap<String, String>();
+		mapSearchResult = searchOnKey(filename, mapRegistored);
+		if( mapSearchResult == null ) {
+			mapSearchResult = mapRegistored;
+		}
+		return mapSearchResult;
 	}
 
 	/**
 	 * マップ<String, String>のキーを部分一致検索する
 	 * @param keyword	検索キーワード
 	 * @param map	検索対象マップ<String,String>
-	 * @return	検索結果のマップ、キーワードが空・nullの場合検索対象マップを返す
+	 * @return	検索結果のマップ、キーワードが空・nullの場合nullを返す
 	 */
 	public static Map<String, String> searchOnKey(
 			String keyword,
@@ -105,11 +110,11 @@ public class ModelRegisterContents {
 		if(		keyword == null
 			||	keyword.isEmpty()
 		) {
-			// キーワードがない場合 そのまま返す
-			mapSearchResult = map;
+			// キーワードがない場合 空マップを返す
+			mapSearchResult = null;
 		} else {
 			Set<String> setKey = map.keySet();
-			for(String key: setKey) {
+			for( String key: setKey ) {
 				if( key.contains(keyword) ) {
 					mapSearchResult.put(key, map.get(key));
 				}

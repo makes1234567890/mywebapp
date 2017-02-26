@@ -33,7 +33,10 @@ public class ControllerServlet extends HttpServlet {
 			HttpServletResponse response
 			) throws ServletException, IOException {
 		String keywordFilename = (String) request.getParameter("keyword");
-		System.out.println("検索キーワード:"+ keywordFilename);	// TODO ログ
+		SystemLog.printlnWithSession(
+				request,
+				"RetrievalKeyword:\""+ keywordFilename +"\"",
+				this );
 		Map<String, String> mapContents =
 				mrc.searchOnFilename(keywordFilename);
 		request.setAttribute("mapFilenameDLPath", mapContents);
