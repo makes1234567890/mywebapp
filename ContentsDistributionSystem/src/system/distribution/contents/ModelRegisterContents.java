@@ -18,18 +18,22 @@ public class ModelRegisterContents {
 	}
 
 	// 定数
-    private final static String LOCATION_CONTENTS_ROOT =	// コンテンツディレクトリの物理パス
-    		  "C:\\pleiades\\gitrepository\\ContentsDistributionSystem\\WebContent\\contents";
-	private final static String CONTEXTPATH_CONTENTS_ROOT =	// コンテンツディレクトリのDLリンク
+    private final String LOCATION_ROOT_CONTENTS_DIRECTORY;	// コンテンツディレクトリの物理パスのルート
+	private final String CONTEXTPATH_ROOT_CONTENTS =	// コンテンツディレクトリのDLリンクのルート
 			"/ContentsDistributionSystem/contents";
 	private final static String DELIMITER_CONTEXTPATH = "/";
 	private final static String STR_EMPTY = "";
 	// 変数
-	String locationCurrentDirectory = "";	// 検索中のディレクトリ物理パス
+	String locationCurrent = "";	// 検索中のディレクトリ物理パス
 	String contextPathCurrentDirectory = "";	// 検索中のディレクトリDLリンク
 
-	// コンストラクタ
-	public ModelRegisterContents() {
+	/**
+	 * コンストラクタ
+	 * @param pathContext コンテンツディレクトリのルート
+	 */
+	public ModelRegisterContents(String pathContext) {
+		this.LOCATION_ROOT_CONTENTS_DIRECTORY = pathContext;
+		SystemLog.println("locationRootContentsDirectory:"+ this.LOCATION_ROOT_CONTENTS_DIRECTORY, this);
 		this.mapRegistored.clear();
 		this.registorContents();
 	}
@@ -39,8 +43,8 @@ public class ModelRegisterContents {
 	public void registorContents() {
 		File currentDirectory =	// カレントディレクトリ
 				new File(
-						  LOCATION_CONTENTS_ROOT
-						+ locationCurrentDirectory
+						LOCATION_ROOT_CONTENTS_DIRECTORY
+						+ locationCurrent
 						);
 		SystemLog.println(currentDirectory.getPath(), this);
 		File files[] = currentDirectory.listFiles();	// カレントディレクトリにあるファイル
@@ -50,15 +54,15 @@ public class ModelRegisterContents {
 				// ファイルの時 ファイル名とDLリンクを登録
 				mapRegistored.put(
 						files[i].getName(),
-						  CONTEXTPATH_CONTENTS_ROOT
+						  CONTEXTPATH_ROOT_CONTENTS
 						+ contextPathCurrentDirectory
 						+ DELIMITER_CONTEXTPATH
 						+ files[i].getName()
 						);
 			} else  if( files[i].isDirectory() ) {
 				// ディレクトリの時 その階層へ移動
-				locationCurrentDirectory =
-						  locationCurrentDirectory
+				locationCurrent =
+						  locationCurrent
 						+ File.separator
 						+ files[i].getName();
 				contextPathCurrentDirectory =
@@ -68,8 +72,8 @@ public class ModelRegisterContents {
 				// カレントディレクトリを移動して再度検索する
 				registorContents();
 				// ディレクトリの検索が終わったのでカレントディレクトリを元に戻す
-				locationCurrentDirectory =
-						locationCurrentDirectory.replace(
+				locationCurrent =
+						locationCurrent.replace(
 								  File.separator
 								+ files[i].getName(),
 								STR_EMPTY
@@ -121,5 +125,9 @@ public class ModelRegisterContents {
 			}
 		}
 		return mapSearchResult;
+	}
+
+	public static void showCurrentDirectory() {
+		System.out.println();
 	}
 }

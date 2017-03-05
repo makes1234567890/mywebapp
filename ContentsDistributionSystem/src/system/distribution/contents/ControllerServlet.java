@@ -17,12 +17,15 @@ import javax.servlet.http.HttpServletResponse;
 public class ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ModelRegisterContents mrc = null;
+	private static final String NAME_CONTENTS_ROOT = "contents";
+	private static final String PARAMETER_KEYWORD = "keyword";
+	private static final String PARAMETER_MAPFILENAMEDLPATH = "mapFilenameDLpath";
+	private static final String PATH_INDEX = "/index.jsp";
     /**
      * @see HttpServlet#HttpServlet()
      */
     public ControllerServlet() {
         super();
-        mrc = new ModelRegisterContents();
     }
 
 	/**
@@ -32,16 +35,21 @@ public class ControllerServlet extends HttpServlet {
 			HttpServletRequest request,
 			HttpServletResponse response
 			) throws ServletException, IOException {
-		String keywordFilename = (String) request.getParameter("keyword");
+		if( mrc == null ) {
+			String pathContext = this.getServletContext().getRealPath(NAME_CONTENTS_ROOT);
+			SystemLog.printlnWithSession(request, pathContext +" starts", this);
+			mrc = new ModelRegisterContents(pathContext);
+		}
+		String keywordFilename = (String) request.getParameter(PARAMETER_KEYWORD);
 		SystemLog.printlnWithSession(
 				request,
-				"RetrievalKeyword:\""+ keywordFilename +"\"",
+				PARAMETER_KEYWORD +":\""+ keywordFilename +"\"",
 				this );
 		Map<String, String> mapContents =
 				mrc.searchOnFilename(keywordFilename);
-		request.setAttribute("mapFilenameDLPath", mapContents);
+		request.setAttribute(PARAMETER_MAPFILENAMEDLPATH, mapContents);
 		RequestDispatcher dispathcer =
-				request.getRequestDispatcher("/index.jsp");
+				request.getRequestDispatcher(PATH_INDEX);
 		dispathcer.forward(request, response);
 	}
 
