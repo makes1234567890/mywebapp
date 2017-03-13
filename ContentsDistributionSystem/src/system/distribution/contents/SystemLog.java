@@ -21,14 +21,18 @@ public class SystemLog {
 			String message,
 			Object object
 			) {
+		String sessionID = null;
+		if(request.getSession(false) != null) {
+			sessionID = request.getSession(false).getId();
+		}
 		String messageToBePrinted = ""
-				.concat(getStrCurrentDateTime())
-				.concat(DELIMITER)
-				.concat(request.getSession(false).getId())
-				.concat(DELIMITER)
-				.concat(object.getClass().getName())
-				.concat(DELIMITER)
-				.concat(message);
+				+ getStrCurrentDateTime()
+				+ DELIMITER
+				+ sessionID
+				+ DELIMITER
+				+ object.getClass().getName()
+				+ DELIMITER
+				+ message ;
 		System.out.println(messageToBePrinted);
 	}
 
@@ -44,11 +48,11 @@ public class SystemLog {
 			Object object
 			) {
 		String messageToBePrinted = ""
-				.concat(getStrCurrentDateTime())
-				.concat(DELIMITER)
-				.concat(object.getClass().getName())
-				.concat(DELIMITER)
-				.concat(message);
+				+ getStrCurrentDateTime()
+				+ DELIMITER
+				+ object.getClass().getName()
+				+ DELIMITER
+				+ message ;
 
 		System.out.println(messageToBePrinted);
 	}

@@ -1,4 +1,5 @@
 <%@page import="system.distribution.contents.ModelRegisterContents"%>
+<%@page import="system.distribution.contents.Constants"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
@@ -19,16 +20,36 @@
 </form>
 <hr />
 <%
-Map<String,String> mapContentsLink = (Map<String,String>) request.getAttribute("mapFilenameDLPath");
-if(mapContentsLink == null) {
-	out.println("-");
-} else {
-	for( String filename: mapContentsLink.keySet()) {
-		out.println("<a href=\""+ mapContentsLink.get(filename) +"\">"+ filename +"</a>");
-		out.println("<br/>");
-	}	// TODO jsで整形
-}
+Map<String,String> mapContentsLink = (Map<String,String>) request.getAttribute((String)Constants.PARAMETER_MAPFILENAMEDLPATH);
 
+if( mapContentsLink == null ) {
+// マップが空＝未検索 再検索
+%>
+<script>
+	window.location.href = "ControllerServlet";
+</script>
+<%
+} else if( mapContentsLink.size() < 1 ) {
+	// 結果がないとき 見つからなかった
+%>
+<p>見つかりませんでした。</p>
+<%
+} else {
+%>
+<table>
+<%
+	for( String filename: mapContentsLink.keySet()) {
+%>
+		<td>
+		<a href="<%=mapContentsLink.get(filename)%>"><%=filename%></a>
+		</td>
+		<tr/>
+<%
+	}
+%>
+</table>
+<%
+}
 %>
 </body>
 </html>

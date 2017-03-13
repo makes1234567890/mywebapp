@@ -19,7 +19,6 @@ public class ControllerServlet extends HttpServlet {
 	private ModelRegisterContents mrc = null;
 	private static final String NAME_CONTENTS_ROOT = "contents";
 	private static final String PARAMETER_KEYWORD = "keyword";
-	private static final String PARAMETER_MAPFILENAMEDLPATH = "mapFilenameDLpath";
 	private static final String PATH_INDEX = "/index.jsp";
     /**
      * @see HttpServlet#HttpServlet()
@@ -47,7 +46,7 @@ public class ControllerServlet extends HttpServlet {
 				this );
 		Map<String, String> mapContents =
 				mrc.searchOnFilename(keywordFilename);
-		request.setAttribute(PARAMETER_MAPFILENAMEDLPATH, mapContents);
+		request.setAttribute(Constants.PARAMETER_MAPFILENAMEDLPATH, mapContents);
 		RequestDispatcher dispathcer =
 				request.getRequestDispatcher(PATH_INDEX);
 		dispathcer.forward(request, response);

@@ -16,7 +16,6 @@ public class ModelRegisterContents {
 	public Map<String, String> getMapRegistored() {
 		return mapRegistored;
 	}
-
 	// 定数
     private final String LOCATION_ROOT_CONTENTS_DIRECTORY;	// コンテンツディレクトリの物理パスのルート
 	private final String CONTEXTPATH_ROOT_CONTENTS =	// コンテンツディレクトリのDLリンクのルート
@@ -59,6 +58,7 @@ public class ModelRegisterContents {
 						+ DELIMITER_CONTEXTPATH
 						+ files[i].getName()
 						);
+				SystemLog.println("filename:"+ files[i].getName(), this);
 			} else  if( files[i].isDirectory() ) {
 				// ディレクトリの時 その階層へ移動
 				locationCurrent =
