@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+
+
+h1 {
+	font-size:500%;
+}
+
+input {
+	font-size:400%;
+}
+
+input#buttonToSearch {
+	width:64px;
+	height:64px;
+    background: url(../img/reading_glass_64.png) left top no-repeat;
+}
+
+p {
+	font-size:400%;
+}
+
+table {
+	border:0;
+}
+
+td {
+	font-size:400%;
+}
+
+a {
+	padding:5px 10px;
+}
