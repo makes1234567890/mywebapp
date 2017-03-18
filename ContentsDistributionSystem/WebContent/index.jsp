@@ -8,23 +8,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<script type="text/javascript">
-if (
-		(navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1)
-		|| navigator.userAgent.indexOf('iPod') > 0
-		|| navigator.userAgent.indexOf('Android') > 0
-	) {
-	// スマートフォン
-	document.write('<link rel="stylesheet" type="text/css" href="css/smartphone.css">');
-} else {
-	// PC
-	document.write('<link rel="stylesheet" type="text/css" href="css/pc.css">');
-}
-</script>
-<link href="css/index.css" rel="stylesheet" type="text/css" >
-<title>ファイルリスト</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" media="only screen and (max-width: 320px)" href="css/smartphone.css"/>
+    <link rel="stylesheet" media="only screen and (max-width: 768px)" href="css/smartphone.css"/>
+    <link rel="stylesheet" media="only screen and (min-width: 768px)" href="css/pc.css"/>
+    <link href="css/index.css" rel="stylesheet" type="text/css" >
+    <title>ファイルリスト</title>
 </head>
 <body>
 <h1>ファイルリスト</h1>
