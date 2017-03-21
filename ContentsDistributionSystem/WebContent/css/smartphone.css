@@ -9,10 +9,10 @@ input {
 	font-size:400%;
 }
 
-input#buttonToSearch {
-	width:64px;
-	height:64px;
-    background: url(../img/reading_glass_64.png) left top no-repeat;
+button#buttonToSearch {
+	width:128px;
+	height:128px;
+    background: url(../img/reading_glass_128.png) left top no-repeat;
 }
 
 p {

@@ -9,7 +9,7 @@ input {
 	font-size:100%;
 }
 
-input#buttonToSearch {
+button#buttonToSearch {
 	width:32px;
 	height:32px;
     background: url(../img/reading_glass_32.png) left top no-repeat;
