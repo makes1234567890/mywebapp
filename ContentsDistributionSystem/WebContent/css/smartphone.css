@@ -1,32 +1,47 @@
 @CHARSET "UTF-8";
 
 
+body {
+}
+
 h1 {
-	font-size:500%;
+	font-size:300%;
+}
+
+form {
+	align: center;
 }
 
 input {
-	font-size:400%;
 }
 
-button#buttonToSearch {
-	width:128px;
-	height:128px;
-    background: url(../img/reading_glass_128.png) left top no-repeat;
+input[type="text"] {
+	height:64px;
+	font-size:52px;
+	margin:10px;
+}
+
+input#buttonToSearch {
+	width:64px;
+	height:64px;
+	padding:10px;
+    background: url(../img/reading_glass_64.png) left top no-repeat;
 }
 
 p {
-	font-size:400%;
+	font-size:250%;
 }
 
 table {
+	width:100%;
 	border:0;
 }
 
 td {
-	font-size:400%;
+	padding:10px 10px;
+	font-size:250%;
 }
 
 a {
-	padding:5px 10px;
+	padding:10px 10px;
 }

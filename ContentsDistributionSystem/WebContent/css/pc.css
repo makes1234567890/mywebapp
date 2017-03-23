@@ -1,17 +1,30 @@
 @CHARSET "UTF-8";
 
+body {
+	width:700px;
+}
 
 h1 {
 	font-size:100%;
 }
 
-input {
-	font-size:100%;
+form {
+	align: center;
 }
 
-button#buttonToSearch {
+input {
+}
+
+input[type="text"] {
+	height:30px;
+	font-size:24px;
+	margin:5px;
+}
+
+input#buttonToSearch {
 	width:32px;
 	height:32px;
+	padding:5px;
     background: url(../img/reading_glass_32.png) left top no-repeat;
 }
 
@@ -20,10 +33,12 @@ p {
 }
 
 table {
+	width:100%;
 	border:0;
 }
 
 td {
+	padding:3px 6px;
 	font-size:100%;
 }
 

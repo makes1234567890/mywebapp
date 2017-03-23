@@ -11,17 +11,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <script type="text/javascript">
-if (
-		(navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1)
-		|| navigator.userAgent.indexOf('iPod') > 0
-		|| navigator.userAgent.indexOf('Android') > 0
-	) {
-	// スマートフォン
-	document.write('<link rel="stylesheet" type="text/css" href="css/smartphone.css">');
-} else {
-	// PC
-	document.write('<link rel="stylesheet" type="text/css" href="css/pc.css">');
+<!-- // CSSの切り替え
+var ua = navigator.userAgent;
+var nameCSS = "";
+if(		ua.indexOf('iPhone') > 0
+	||	ua.indexOf('iPod') > 0
+	||	(ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0 )
+	||	( ua.indexOf('windows') > 0 && ua.indexOf('phone') > 0 )
+	||	( ua.indexOf('firefox') > 0 && ua.indexOf('mobile') > 0 ) )
+{	// スマートフォン
+	nameCSS = "smartphone.css";
+} else
+	if(	ua.indexOf('iPad') > 0
+	||	ua.indexOf('Android') > 0
+	||	( ua.indexOf('windows') > 0 && ua.indexOf('touch') > 0 )
+	||	( ua.indexOf('firefox') > 0 && ua.indexOf('tablet') > 0 ) )
+{	// タブレット
+	nameCSS = "tablet/css";
+} else
+{	// PC
+	nameCSS = "pc.css";
 }
+document.write('<link href="css/'+ nameCSS +'" rel="stylesheet" type="text/css" >');
+document.close();
+//-->
 </script>
 <link href="css/index.css" rel="stylesheet" type="text/css" >
 <title>ファイルリスト</title>
@@ -41,7 +54,7 @@ Map<String,String> mapContentsLink = (Map<String,String>) request.getAttribute((
 if( mapContentsLink == null ) {
 // マップが空＝未検索 再検索
 %>
-<script>
+<script type="text/javascript">
 	window.location.href = "ControllerServlet";
 </script>
 <%
@@ -60,7 +73,7 @@ if( mapContentsLink == null ) {
 		count++;
 %>
 	<td class="<%= strEvenOdd %>">
-	<a href="<%=mapContentsLink.get(filename)%>"><%=filename%></a>
+	<a href="<%= mapContentsLink.get(filename) %>"><%= filename %></a>
 	</td>
 	<tr/>
 <%
