@@ -118,16 +118,27 @@ public class ModelRegisterContents {
 			mapSearchResult = null;
 		} else {
 			Set<String> setKey = map.keySet();
-			for( String key: setKey ) {
-				if( key.contains(keyword) ) {
-					mapSearchResult.put(key, map.get(key));
+			for( String keyOfMap : setKey ) {
+				if( isMatchedOnPartialMatchSearch(keyword, keyOfMap) ) {
+					mapSearchResult.put(keyOfMap, map.get(keyOfMap));
 				}
 			}
 		}
 		return mapSearchResult;
 	}
+	private static boolean isMatchedOnPartialMatchSearch( String key, String target ) {
+		if(		key == null
+			||	target == null
+			||	key.isEmpty()
+			||	target.isEmpty()
+		) {
+			return false;
+		}
+		String keyLowered		= key.toLowerCase();
+		SystemLog.println("keyL:"+ keyLowered, "fe");
+		String targetLowered	= target.toLowerCase();
+		SystemLog.println("tarL:"+ targetLowered, "fe");
 
-	public static void showCurrentDirectory() {
-		System.out.println();
+		return targetLowered.contains(keyLowered);
 	}
 }

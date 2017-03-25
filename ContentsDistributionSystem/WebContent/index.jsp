@@ -16,7 +16,7 @@ var ua = navigator.userAgent;
 var nameCSS = "";
 if(		ua.indexOf('iPhone') > 0
 	||	ua.indexOf('iPod') > 0
-	||	( ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0 )
+	||	(ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0 )
 	||	( ua.indexOf('windows') > 0 && ua.indexOf('phone') > 0 )
 	||	( ua.indexOf('firefox') > 0 && ua.indexOf('mobile') > 0 ) )
 {	// スマートフォン
@@ -73,8 +73,8 @@ if( mapContentsLink == null ) {
 <table>
 <%
 	int count = 0;
-	for( String filename: mapContentsLink.keySet() ) {
-		String strEvenOdd;
+	for( String filename: mapContentsLink.keySet()) {
+		String  strEvenOdd;
 		if( count%2 == 0 )	strEvenOdd = "even";
 		else				strEvenOdd = "odd";
 		count++;
