@@ -16,18 +16,22 @@ var ua = navigator.userAgent;
 var nameCSS = "";
 if(		ua.indexOf('iPhone') > 0
 	||	ua.indexOf('iPod') > 0
-	||	(ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0 )
+	||	( ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0 )
 	||	( ua.indexOf('windows') > 0 && ua.indexOf('phone') > 0 )
 	||	( ua.indexOf('firefox') > 0 && ua.indexOf('mobile') > 0 ) )
 {	// スマートフォン
-	nameCSS = "smartphone.css";
+	if( window.innerWidth < 400 ) {
+		nameCSS = "smartphone.css";
+	} else {
+		nameCSS = "tablet.css";
+	}
 } else
 	if(	ua.indexOf('iPad') > 0
 	||	ua.indexOf('Android') > 0
 	||	( ua.indexOf('windows') > 0 && ua.indexOf('touch') > 0 )
 	||	( ua.indexOf('firefox') > 0 && ua.indexOf('tablet') > 0 ) )
 {	// タブレット
-	nameCSS = "tablet/css";
+	nameCSS = "tablet.css";
 } else
 {	// PC
 	nameCSS = "pc.css";
@@ -49,7 +53,8 @@ document.close();
 
 <hr />
 <%
-Map<String,String> mapContentsLink = (Map<String,String>) request.getAttribute((String)Constants.PARAMETER_MAPFILENAMEDLPATH);
+Map<String,String> mapContentsLink =
+(Map<String,String>) request.getAttribute((String)Constants.PARAMETER_MAPFILENAMEDLPATH);
 
 if( mapContentsLink == null ) {
 // マップが空＝未検索 再検索
@@ -68,8 +73,10 @@ if( mapContentsLink == null ) {
 <table>
 <%
 	int count = 0;
-	for( String filename: mapContentsLink.keySet()) {
-		String strEvenOdd = (count%2 == 0) ? "even" : "odd";
+	for( String filename: mapContentsLink.keySet() ) {
+		String strEvenOdd;
+		if( count%2 == 0 )	strEvenOdd = "even";
+		else				strEvenOdd = "odd";
 		count++;
 %>
 	<td class="<%= strEvenOdd %>">
@@ -83,5 +90,33 @@ if( mapContentsLink == null ) {
 <%
 }
 %>
+<p>画面サイズ：<span id="ScrSize"></span></p>
+<p>ウィンドウサイズ：<span id="WinSize"></span></p>
+
+<script type="text/javascript">
+<!--
+//画面サイズの取得
+getScreenSize();
+//ウィンドウサイズの取得
+getWindowSize();
+
+//画面サイズを取得する
+function getScreenSize() {
+	var s = "横幅 = " + window.parent.screen.width + " / 高さ = " + window.parent.screen.height;
+	document.getElementById("ScrSize").innerHTML = s;
+}
+
+//ウィンドウサイズを取得する
+function getWindowSize() {
+	var sW,sH,s;
+	sW = window.innerWidth;
+	sH = window.innerHeight;
+
+	s = "横幅 = " + sW + " / 高さ = " + sH;
+
+	document.getElementById("WinSize").innerHTML = s;
+}
+//-->
+</script>
 </body>
 </html>

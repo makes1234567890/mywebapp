@@ -8,3 +8,7 @@ body {
 td.odd {
 	background-color: palegreen;
 }
+
+input#buttonToSearch {
+	background-color: whitesmoke;
+}

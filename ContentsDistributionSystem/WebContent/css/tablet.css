@@ -1,12 +1,11 @@
 @CHARSET "UTF-8";
 
-
 body {
-	width:100%;
+	width:90%;
 }
 
 h1 {
-	font-size:100%;
+	font-size:300%;
 }
 
 form {
@@ -30,7 +29,7 @@ input#buttonToSearch {
 }
 
 p {
-	font-size:100%;
+	font-size:250%;
 }
 
 table {
@@ -40,9 +39,9 @@ table {
 
 td {
 	padding:10px 10px;
-	font-size:100%;
+	font-size:250%;
 }
 
 a {
-	padding:5px 5px;
+	padding:10px 10px;
 }
