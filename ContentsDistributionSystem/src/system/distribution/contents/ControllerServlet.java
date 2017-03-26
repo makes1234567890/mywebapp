@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/ControllerServlet")
 public class ControllerServlet extends HttpServlet {
+	public static final String CONTEXTPATH_WEBSERVLET = "ControllerServlet";
 	private static final long serialVersionUID = 1L;
 	private ModelRegisterContents mrc = null;
 	private static final String NAME_CONTENTS_ROOT = "contents";
-	private static final String PARAMETER_KEYWORD = "keyword";
 	private static final String PATH_INDEX = "/index.jsp";
     /**
      * @see HttpServlet#HttpServlet()
@@ -39,10 +39,10 @@ public class ControllerServlet extends HttpServlet {
 			SystemLog.printlnWithSession(request, pathContext +" starts", this);
 			mrc = new ModelRegisterContents(pathContext);
 		}
-		String keywordFilename = (String) request.getParameter(PARAMETER_KEYWORD);
+		String keywordFilename = (String) request.getParameter(Constants.PARAMETER_KEYWORD);
 		SystemLog.printlnWithSession(
 				request,
-				PARAMETER_KEYWORD +":\""+ keywordFilename +"\"",
+				Constants.PARAMETER_KEYWORD +":\""+ keywordFilename +"\"",
 				this );
 		Map<String, String> mapContents =
 				mrc.searchOnFilename(keywordFilename);

@@ -1,3 +1,4 @@
+<%@page import="system.distribution.contents.ControllerServlet"%>
 <%@page import="system.distribution.contents.ModelRegisterContents"%>
 <%@page import="system.distribution.contents.Constants"%>
 <%@page import="java.util.ArrayList"%>
@@ -13,7 +14,7 @@
 <script type="text/javascript">
 <!-- // CSSの切り替え
 var ua = navigator.userAgent;
-var nameCSS = "";
+var nameCSS = "pc.css";
 if(		ua.indexOf('iPhone') > 0
 	||	ua.indexOf('iPod') > 0
 	||	(ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0 )
@@ -46,8 +47,8 @@ document.close();
 <body>
 <h1>ファイルリスト</h1>
 
-<form action="ControllerServlet">
-	<input type="text" name="keyword" />
+<form action="<%= ControllerServlet.CONTEXTPATH_WEBSERVLET %>">
+	<input type="text" name="<%= Constants.PARAMETER_KEYWORD %>" />
 	<input type="submit" value="" id="buttonToSearch" />
 </form>
 
@@ -60,7 +61,7 @@ if( mapContentsLink == null ) {
 // マップが空＝未検索 再検索
 %>
 <script type="text/javascript">
-	window.location.href = "ControllerServlet";
+	window.location.href = "<%= ControllerServlet.CONTEXTPATH_WEBSERVLET %>";
 </script>
 <%
 } else if( mapContentsLink.size() < 1 ) {

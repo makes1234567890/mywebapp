@@ -6,5 +6,6 @@ package system.distribution.contents;
  */
 public class Constants {
 	public static final String PARAMETER_MAPFILENAMEDLPATH = "mapFilenameDLPath";
-	public static final String CONTEXTPATH_WEBSERVLET = "ControllerServlet";
+	public static final String PARAMETER_KEYWORD = "keyword";
+
 }

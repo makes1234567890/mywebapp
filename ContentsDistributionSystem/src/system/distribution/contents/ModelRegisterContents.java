@@ -3,7 +3,6 @@ package system.distribution.contents;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 /**
  * コンテンツデータ保有クラス
  * @author matak
@@ -45,7 +44,6 @@ public class ModelRegisterContents {
 						LOCATION_ROOT_CONTENTS_DIRECTORY
 						+ locationCurrent
 						);
-		SystemLog.println(currentDirectory.getPath(), this);
 		File files[] = currentDirectory.listFiles();	// カレントディレクトリにあるファイル
 
 		for( int i=0; i<files.length; i++) {
@@ -117,27 +115,26 @@ public class ModelRegisterContents {
 			// キーワードがない場合 空マップを返す
 			mapSearchResult = null;
 		} else {
-			Set<String> setKey = map.keySet();
-			for( String keyOfMap : setKey ) {
-				if( isMatchedOnPartialMatchSearch(keyword, keyOfMap) ) {
-					mapSearchResult.put(keyOfMap, map.get(keyOfMap));
-				}
+			for( Map.Entry<String, String> me : map.entrySet() ){
+				// 検索対象マップから1組のキー（ファイル名）とバリュー（DLパス）を取得
+				if( isMatchedPartially(keyword, me.getKey()) )
+					// 検索キーがキー（ファイル名）に部分一致　検索結果マップに登録
+					mapSearchResult.put(me.getKey(), me.getValue());
 			}
 		}
 		return mapSearchResult;
 	}
-	private static boolean isMatchedOnPartialMatchSearch( String key, String target ) {
+	private static boolean isMatchedPartially( String key, String target ) {
 		if(		key == null
 			||	target == null
 			||	key.isEmpty()
 			||	target.isEmpty()
 		) {
+			// 検索キー、検索対象なし
 			return false;
 		}
 		String keyLowered		= key.toLowerCase();
-		SystemLog.println("keyL:"+ keyLowered, "fe");
 		String targetLowered	= target.toLowerCase();
-		SystemLog.println("tarL:"+ targetLowered, "fe");
 
 		return targetLowered.contains(keyLowered);
 	}
