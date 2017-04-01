@@ -6,10 +6,11 @@ body {
 	background-color: ivory;
 }
 
-td.even {
+/* テーブルの奇数行・偶数行 */
+tr:nth-child(2n+1) {
 	background-color: palegreen;
 }
-td.odd {
+tr:nth-child(2n) {
 	background-color: snow;
 }
 

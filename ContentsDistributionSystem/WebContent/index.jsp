@@ -73,14 +73,9 @@ if( mapContentsLink == null ) {
 %>
 <table>
 <%
-	int count = 0;
 	for( String filename: mapContentsLink.keySet()) {
-		String  strEvenOdd;
-		if( count%2 == 0 )	strEvenOdd = "even";
-		else				strEvenOdd = "odd";
-		count++;
 %>
-	<td class="<%= strEvenOdd %>">
+	<td>
 	<a href="<%= mapContentsLink.get(filename) %>"><%= filename %></a>
 	</td>
 	<tr/>
@@ -91,33 +86,5 @@ if( mapContentsLink == null ) {
 <%
 }
 %>
-<p>画面サイズ：<span id="ScrSize"></span></p>
-<p>ウィンドウサイズ：<span id="WinSize"></span></p>
-
-<script type="text/javascript">
-<!--
-//画面サイズの取得
-getScreenSize();
-//ウィンドウサイズの取得
-getWindowSize();
-
-//画面サイズを取得する
-function getScreenSize() {
-	var s = "横幅 = " + window.parent.screen.width + " / 高さ = " + window.parent.screen.height;
-	document.getElementById("ScrSize").innerHTML = s;
-}
-
-//ウィンドウサイズを取得する
-function getWindowSize() {
-	var sW,sH,s;
-	sW = window.innerWidth;
-	sH = window.innerHeight;
-
-	s = "横幅 = " + sW + " / 高さ = " + sH;
-
-	document.getElementById("WinSize").innerHTML = s;
-}
-//-->
-</script>
 </body>
 </html>
